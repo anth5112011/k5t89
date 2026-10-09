@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Học Tập & Đánh Giá Nhà Quản Trị AI</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas for exporting report as image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Ensure textareas wrap cleanly and show all typed text */
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
+                    <i class="fa-solid fa-robot text-2xl text-indigo-200"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide">Nhà Quản Trị Dự Án AI</h1>
+                    <p class="text-xs text-indigo-200">Phiếu Học Tập & Đánh Giá Tổng Hợp</p>
+                </div>
+            </div>
+            
+            <!-- Student Information & Report Button Bar -->
+            <div class="flex flex-wrap items-center gap-3 bg-indigo-800/80 p-2.5 rounded-xl border border-indigo-600/50">
+                <div class="flex items-center space-x-2">
+                    <label class="text-xs text-indigo-200 font-medium whitespace-nowrap"><i class="fa-solid fa-user mr-1"></i>Họ tên:</label>
+                    <input type="text" id="studentName" placeholder="Nhập tên HS..." class="bg-indigo-900/90 border border-indigo-500/50 text-white text-xs px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 w-36">
+                </div>
+                <div class="flex items-center space-x-2">
+                    <label class="text-xs text-indigo-200 font-medium whitespace-nowrap"><i class="fa-solid fa-users mr-1"></i>Nhóm:</label>
+                    <input type="text" id="studentGroup" placeholder="Tên nhóm..." class="bg-indigo-900/90 border border-indigo-500/50 text-white text-xs px-3 py-1.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 w-28">
+                </div>
+                <button onclick="openReportModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Xem Báo Cáo</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
+
+        <!-- Introduction banner -->
+        <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-2xl text-sm text-indigo-900 shadow-sm space-y-2">
+            <div class="flex items-center space-x-2 font-bold text-indigo-700">
+                <i class="fa-solid fa-circle-info text-lg"></i>
+                <span>Hướng dẫn học tập</span>
+            </div>
+            <p>Chào các em! Hãy hoàn thành các hoạt động bên dưới trên cùng một trang giấy điện tử này. Các ô nhập văn bản sẽ tự động mở rộng khi các em viết dài, đảm bảo hiển thị toàn bộ nội dung rõ ràng.</p>
+        </div>
+
+        <!-- PHẦN 1: ĐÁNH GIÁ GIẢI PHÁP -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6">
+            <div class="flex items-center space-x-3 border-b pb-4">
+                <span class="bg-indigo-100 text-indigo-700 font-bold px-3 py-1.5 rounded-xl text-sm">Phần 1</span>
+                <h2 class="text-lg font-bold text-slate-900">Đánh Giá Giải Pháp AI Của Nhóm</h2>
+            </div>
+            <p class="text-xs text-slate-600">Đánh giá dựa trên 4 tiêu chí: <em>Phù hợp vấn đề</em>, <em>Phù hợp người dùng</em>, <em>Hiệu quả</em> và <em>Khả thi</em>.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Điểm mạnh của giải pháp:</label>
+                    <textarea id="p1_diemmanh" placeholder="Nhập điểm mạnh dựa trên tiêu chí..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Điểm cần cải thiện:</label>
+                    <textarea id="p1_diemcaithien" placeholder="Nhập điểm cần cải thiện..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Tiêu chí nhóm đạt tốt nhất:</label>
+                    <input type="text" id="p1_tieuchitot" placeholder="VD: Phù hợp vấn đề..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Tiêu chí nhóm cần cải thiện:</label>
+                    <input type="text" id="p1_tieuchite" placeholder="VD: Khả thi..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+            </div>
+            <div class="space-y-1.5">
+                <label class="block text-xs font-semibold text-slate-700"><i class="fa-solid fa-lightbulb text-amber-500 mr-1.5"></i>Suy ngẫm: Nếu được thay đổi một điểm trong giải pháp, nhóm em muốn thay đổi điều gì? Vì sao?</label>
+                <textarea id="p1_suyngam" placeholder="Chia sẻ suy ngẫm của nhóm..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+            </div>
+        </section>
+
+        <!-- PHẦN 2: ẢO GIÁC AI & KIỂM CHỨNG -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6">
+            <div class="flex items-center space-x-3 border-b pb-4">
+                <span class="bg-indigo-100 text-indigo-700 font-bold px-3 py-1.5 rounded-xl text-sm">Phần 2</span>
+                <h2 class="text-lg font-bold text-slate-900">Nhận Diện “Ảo Giác AI” & Kiểm Chứng Thông Tin</h2>
+            </div>
+            <p class="text-xs text-slate-600">Quy trình xử lý: <em>Dừng lại → Kiểm tra → Đối chiếu → Quyết định</em>.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Thông tin quan trọng trong dự án:</label>
+                    <textarea id="p2_thongtin" placeholder="VD: Số liệu thống kê, báo cáo..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">AI cung cấp nội dung gì?</label>
+                    <textarea id="p2_aicungcap" placeholder="Nhập nội dung AI đưa ra..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Cách nhóm kiểm tra (đối chiếu nguồn tin):</label>
+                    <textarea id="p2_cachkiemtra" placeholder="VD: Kiểm tra sách giáo khoa, hỏi chuyên gia..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Kết luận cuối cùng:</label>
+                    <select id="p2_ketluan" class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+                        <option value="Có sử dụng">Có sử dụng</option>
+                        <option value="Cần chỉnh sửa">Cần chỉnh sửa</option>
+                        <option value="Không sử dụng">Không sử dụng</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHẦN 3: VAI TRÒ & DẤU VẾT AI -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6">
+            <div class="flex items-center space-x-3 border-b pb-4">
+                <span class="bg-indigo-100 text-indigo-700 font-bold px-3 py-1.5 rounded-xl text-sm">Phần 3</span>
+                <h2 class="text-lg font-bold text-slate-900">Truy Tìm “Dấu Vết AI” & Trách Nhiệm Sản Phẩm</h2>
+            </div>
+            <p class="text-xs text-slate-600">Phân loại mức độ: <em>Mức 1 – Gợi ý</em> | <em>Mức 2 – Hỗ trợ</em> | <em>Mức 3 – Tạo trực tiếp</em>.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Task 1 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <h3 class="font-bold text-xs text-indigo-700">1. Tìm thông tin</h3>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">Mức độ AI:</label>
+                        <select id="p3_muc_tt" class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1 bg-white">
+                            <option value="Không dùng">Không dùng</option>
+                            <option value="Mức 1: Gợi ý">Mức 1: Gợi ý</option>
+                            <option value="Mức 2: Hỗ trợ">Mức 2: Hỗ trợ</option>
+                            <option value="Mức 3: Tạo trực tiếp">Mức 3: Tạo trực tiếp</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">AI đã làm gì?</label>
+                        <textarea id="p3_ai_tt" placeholder="AI làm gì..." class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1"></textarea>
+                    </div>
+                </div>
+                <!-- Task 2 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <h3 class="font-bold text-xs text-indigo-700">2. Phát triển ý tưởng</h3>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">Mức độ AI:</label>
+                        <select id="p3_muc_yt" class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1 bg-white">
+                            <option value="Không dùng">Không dùng</option>
+                            <option value="Mức 1: Gợi ý">Mức 1: Gợi ý</option>
+                            <option value="Mức 2: Hỗ trợ">Mức 2: Hỗ trợ</option>
+                            <option value="Mức 3: Tạo trực tiếp">Mức 3: Tạo trực tiếp</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">AI đã làm gì?</label>
+                        <textarea id="p3_ai_yt" placeholder="AI làm gì..." class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1"></textarea>
+                    </div>
+                </div>
+                <!-- Task 3 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <h3 class="font-bold text-xs text-indigo-700">3. Tạo nội dung</h3>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">Mức độ AI:</label>
+                        <select id="p3_muc_nd" class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1 bg-white">
+                            <option value="Không dùng">Không dùng</option>
+                            <option value="Mức 1: Gợi ý">Mức 1: Gợi ý</option>
+                            <option value="Mức 2: Hỗ trợ">Mức 2: Hỗ trợ</option>
+                            <option value="Mức 3: Tạo trực tiếp">Mức 3: Tạo trực tiếp</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">AI đã làm gì?</label>
+                        <textarea id="p3_ai_nd" placeholder="AI làm gì..." class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1"></textarea>
+                    </div>
+                </div>
+                <!-- Task 4 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <h3 class="font-bold text-xs text-indigo-700">4. Tạo hình ảnh</h3>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">Mức độ AI:</label>
+                        <select id="p3_muc_ha" class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1 bg-white">
+                            <option value="Không dùng">Không dùng</option>
+                            <option value="Mức 1: Gợi ý">Mức 1: Gợi ý</option>
+                            <option value="Mức 2: Hỗ trợ">Mức 2: Hỗ trợ</option>
+                            <option value="Mức 3: Tạo trực tiếp">Mức 3: Tạo trực tiếp</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-500 font-medium">AI đã làm gì?</label>
+                        <textarea id="p3_ai_ha" placeholder="AI làm gì..." class="w-full rounded-lg border border-slate-300 p-2 text-xs mt-1"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHẦN 4: ĐẠO ĐỨC, TÁC ĐỘNG & WELLBEING -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6">
+            <div class="flex items-center space-x-3 border-b pb-4">
+                <span class="bg-indigo-100 text-indigo-700 font-bold px-3 py-1.5 rounded-xl text-sm">Phần 4</span>
+                <h2 class="text-lg font-bold text-slate-900">Đạo Đức, Tác Động & Sức Khỏe Tinh Thần (Wellbeing)</h2>
+            </div>
+            <p class="text-xs text-slate-600">Xem xét các yếu tố: <em>Công bằng</em>, <em>Riêng tư</em>, <em>An toàn</em>, <em>Trách nhiệm</em> và <em>Tác động đến con người</em>.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">AI giúp gì cho dự án?</label>
+                    <textarea id="p4_aigiup" placeholder="VD: Tự động hóa tính toán..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Ngành nghề liên quan đến dự án:</label>
+                    <select id="p4_nganhnghe" class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+                        <option value="Giáo dục">Giáo dục</option>
+                        <option value="Y tế">Y tế</option>
+                        <option value="Giao thông">Giao thông</option>
+                        <option value="Bán lẻ">Bán lẻ</option>
+                        <option value="Du lịch">Du lịch</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Người được hưởng lợi:</label>
+                    <textarea id="p4_nguoihuongloi" placeholder="VD: Học sinh, giáo viên..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Người có thể bị ảnh hưởng tiêu cực:</label>
+                    <textarea id="p4_nguoibiahuong" placeholder="VD: Nhóm ít tiếp cận công nghệ..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Vấn đề đạo đức cần lưu ý:</label>
+                    <textarea id="p4_vandedaoduc" placeholder="VD: Quyền riêng tư, sự công bằng..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-slate-700">Cách giảm tác động tiêu cực / Duy trì wellbeing:</label>
+                    <textarea id="p4_giaiphap" placeholder="VD: Thêm bước kiểm tra thủ công, không để AI quyết định thay hoàn toàn..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Report trigger bar -->
+        <div class="flex justify-center pt-4 pb-12">
+            <button onclick="openReportModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition flex items-center space-x-2 text-base">
+                <i class="fa-solid fa-file-lines text-lg"></i>
+                <span>Xem Báo Cáo & Tải Ảnh Bài Làm</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- REPORT MODAL -->
+    <div id="reportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
+            <div class="bg-indigo-700 text-white px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-clipboard-check text-xl text-indigo-200"></i>
+                    <h3 class="font-bold text-lg">Báo Cáo Tổng Hợp Bài Làm Học Sinh</h3>
+                </div>
+                <button onclick="closeReportModal()" class="text-indigo-200 hover:text-white text-xl p-1 rounded-lg transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Modal Body (The printable/exportable report card) -->
+            <div id="reportContent" class="p-6 md:p-8 overflow-y-auto space-y-6 bg-slate-50 flex-grow text-slate-800">
+                <!-- Student Header Info -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between gap-2">
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Học sinh thực hiện:</p>
+                        <p id="rep_name" class="font-bold text-base text-indigo-700">Chưa cập nhật tên</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Nhóm:</p>
+                        <p id="rep_group" class="font-bold text-base text-slate-700">Chưa cập nhật nhóm</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Thời gian tạo báo cáo:</p>
+                        <p id="rep_time" class="font-medium text-xs text-slate-600">-</p>
+                    </div>
+                </div>
+
+                <!-- Phần 1 Report Summary -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <h4 class="font-bold text-indigo-600 text-sm border-b pb-2 flex items-center justify-between">
+                        <span>Phần 1: Đánh Giá Giải Pháp AI</span>
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <div><strong>Điểm mạnh:</strong> <span id="rep_p1_dm" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Điểm cần cải thiện:</strong> <span id="rep_p1_dc" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Tiêu chí đạt tốt:</strong> <span id="rep_p1_tt" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Tiêu chí cần cải thiện:</strong> <span id="rep_p1_tc" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                    </div>
+                    <div class="text-xs pt-1"><strong>Suy ngẫm thay đổi:</strong> <span id="rep_p1_sn" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                </div>
+
+                <!-- Phần 2 Report Summary -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <h4 class="font-bold text-indigo-600 text-sm border-b pb-2 flex items-center justify-between">
+                        <span>Phần 2: Ảo Giác AI & Kiểm Chứng</span>
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <div><strong>Thông tin dự án:</strong> <span id="rep_p2_tt" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>AI cung cấp:</strong> <span id="rep_p2_ai" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Cách kiểm tra:</strong> <span id="rep_p2_kt" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Kết luận:</strong> <span id="rep_p2_kl" class="font-semibold text-indigo-600">-</span></div>
+                    </div>
+                </div>
+
+                <!-- Phần 3 Report Summary -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <h4 class="font-bold text-indigo-600 text-sm border-b pb-2 flex items-center justify-between">
+                        <span>Phần 3: Vai Trò & Dấu Vết AI</span>
+                    </h4>
+                    <div class="text-xs grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border">
+                        <div><strong>1. Tìm TT:</strong> <span id="rep_p3_tt" class="text-indigo-700 font-medium">-</span> <br><span id="rep_p3_ai_tt" class="text-slate-600 text-[11px]"></span></div>
+                        <div><strong>2. Ý tưởng:</strong> <span id="rep_p3_yt" class="text-indigo-700 font-medium">-</span> <br><span id="rep_p3_ai_yt" class="text-slate-600 text-[11px]"></span></div>
+                        <div><strong>3. Nội dung:</strong> <span id="rep_p3_nd" class="text-indigo-700 font-medium">-</span> <br><span id="rep_p3_ai_nd" class="text-slate-600 text-[11px]"></span></div>
+                        <div><strong>4. Hình ảnh:</strong> <span id="rep_p3_ha" class="text-indigo-700 font-medium">-</span> <br><span id="rep_p3_ai_ha" class="text-slate-600 text-[11px]"></span></div>
+                    </div>
+                </div>
+
+                <!-- Phần 4 Report Summary -->
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <h4 class="font-bold text-indigo-600 text-sm border-b pb-2 flex items-center justify-between">
+                        <span>Phần 4: Đạo Đức, Tác Động & Wellbeing</span>
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <div><strong>AI giúp gì:</strong> <span id="rep_p4_giup" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Ngành nghề:</strong> <span id="rep_p4_nganh" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Người hưởng lợi:</strong> <span id="rep_p4_loi" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Người bị ảnh hưởng:</strong> <span id="rep_p4_anhhuong" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Vấn đề đạo đức:</strong> <span id="rep_p4_daoduc" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                        <div><strong>Giải pháp / Wellbeing:</strong> <span id="rep_p4_giaiphap" class="text-slate-600 whitespace-pre-wrap">-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer with Download Button -->
+            <div class="bg-white px-6 py-4 border-t border-slate-200 flex justify-end space-x-3">
+                <button onclick="closeReportModal()" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition">Đóng</button>
+                <button onclick="downloadReportImage()" id="downloadBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2 rounded-xl shadow transition flex items-center space-x-2 text-sm">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Tải File Ảnh Báo Cáo</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mt-auto">
+        <p>Hệ thống Học tập & Đánh giá Nhà Quản Trị AI &bull; Vinschool Grand Park &bull; Giáo viên: Thái Hoàng An</p>
+    </footer>
+
+    <script>
+        function openReportModal() {
+            // Collect all input values and populate the report modal
+            const name = document.getElementById('studentName').value || 'Chưa nhập tên';
+            const group = document.getElementById('studentGroup').value || 'Chưa nhập nhóm';
+
+            document.getElementById('rep_name').innerText = name;
+            document.getElementById('rep_group').innerText = group;
+            document.getElementById('rep_time').innerText = new Date().toLocaleString('vi-VN');
+
+            // Phần 1
+            document.getElementById('rep_p1_dm').innerText = document.getElementById('p1_diemmanh').value || '(Chưa điền)';
+            document.getElementById('rep_p1_dc').innerText = document.getElementById('p1_diemcaithien').value || '(Chưa điền)';
+            document.getElementById('rep_p1_tt').innerText = document.getElementById('p1_tieuchitot').value || '(Chưa điền)';
+            document.getElementById('rep_p1_tc').innerText = document.getElementById('p1_tieuchite').value || '(Chưa điền)';
+            document.getElementById('rep_p1_sn').innerText = document.getElementById('p1_suyngam').value || '(Chưa điền)';
+
+            // Phần 2
+            document.getElementById('rep_p2_tt').innerText = document.getElementById('p2_thongtin').value || '(Chưa điền)';
+            document.getElementById('rep_p2_ai').innerText = document.getElementById('p2_aicungcap').value || '(Chưa điền)';
+            document.getElementById('rep_p2_kt').innerText = document.getElementById('p2_cachkiemtra').value || '(Chưa điền)';
+            document.getElementById('rep_p2_kl').innerText = document.getElementById('p2_ketluan').value;
+
+            // Phần 3
+            document.getElementById('rep_p3_tt').innerText = document.getElementById('p3_muc_tt').value;
+            document.getElementById('rep_p3_ai_tt').innerText = document.getElementById('p3_ai_tt').value ? `Chi tiết: ${document.getElementById('p3_ai_tt').value}` : '';
+            
+            document.getElementById('rep_p3_yt').innerText = document.getElementById('p3_muc_yt').value;
+            document.getElementById('rep_p3_ai_yt').innerText = document.getElementById('p3_ai_yt').value ? `Chi tiết: ${document.getElementById('p3_ai_yt').value}` : '';
+
+            document.getElementById('rep_p3_nd').innerText = document.getElementById('p3_muc_nd').value;
+            document.getElementById('rep_p3_ai_nd').innerText = document.getElementById('p3_ai_nd').value ? `Chi tiết: ${document.getElementById('p3_ai_nd').value}` : '';
+
+            document.getElementById('rep_p3_ha').innerText = document.getElementById('p3_muc_ha').value;
+            document.getElementById('rep_p3_ai_ha').innerText = document.getElementById('p3_ai_ha').value ? `Chi tiết: ${document.getElementById('p3_ai_ha').value}` : '';
+
+            // Phần 4
+            document.getElementById('rep_p4_giup').innerText = document.getElementById('p4_aigiup').value || '(Chưa điền)';
+            document.getElementById('rep_p4_nganh').innerText = document.getElementById('p4_nganhnghe').value;
+            document.getElementById('rep_p4_loi').innerText = document.getElementById('p4_nguoihuongloi').value || '(Chưa điền)';
+            document.getElementById('rep_p4_anhhuong').innerText = document.getElementById('p4_nguoibiahuong').value || '(Chưa điền)';
+            document.getElementById('rep_p4_daoduc').innerText = document.getElementById('p4_vandedaoduc').value || '(Chưa điền)';
+            document.getElementById('rep_p4_giaiphap').innerText = document.getElementById('p4_giaiphap').value || '(Chưa điền)';
+
+            document.getElementById('reportModal').classList.remove('hidden');
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.add('hidden');
+        }
+
+        function downloadReportImage() {
+            const btn = document.getElementById('downloadBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Đang tạo ảnh...</span>`;
+            btn.style.pointerEvents = 'none';
+
+            const reportElement = document.getElementById('reportContent');
+
+            html2canvas(reportElement, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#f8fafc'
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `BaoCao_QuanTriAI_${document.getElementById('studentName').value || 'HocSinh'}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            }).catch(err => {
+                console.error(err);
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            });
+        }
+    </script>
+</body>
+</html>
